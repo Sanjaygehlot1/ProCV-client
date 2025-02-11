@@ -1,14 +1,15 @@
 import './App.css'
 import { Outlet } from 'react-router-dom'
-
+import { Toaster } from 'react-hot-toast';
 function App() {
 
   return (
-   <div>
-    <main>
-    <Outlet/>
-    </main>
-   </div>
+    <div>
+      <Toaster position="bottom-right" reverseOrder={false} />
+      <main>
+        <Outlet />
+      </main>
+    </div>
   )
 }
 

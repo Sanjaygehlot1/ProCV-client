@@ -9,6 +9,23 @@ const initialState = {
     userResumes : []
 }
 
+const RegisterUser = createAsyncThunk("user/register",async (data,{rejectWithValue})=>{
+    try {
+        if(data){
+            console.log(data)
+           const Response = await AxiosInstance.post("/users/register",data)
+           if(Response){
+            console.log(Response)
+           
+            return Response.data.data
+           }
+        }
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error.response.data.message)
+    }
+})
+
 const LoginUser = createAsyncThunk("user/login",async (data,{rejectWithValue})=>{
     try {
         if(data){
@@ -25,6 +42,7 @@ const LoginUser = createAsyncThunk("user/login",async (data,{rejectWithValue})=>
         return rejectWithValue(error.response.data.message)
     }
 })
+
 
 const AuthSlice = createSlice({
     initialState,
@@ -43,10 +61,24 @@ const AuthSlice = createSlice({
             state.loading = false
             state.error = action.payload
         })
+        reducer.addCase(RegisterUser.pending,(state)=>{
+            state.loading = true
+            state.error = null
+        })
+        reducer.addCase(RegisterUser.fulfilled,(state,action)=>{
+            state.loading = false
+            state.error = null
+        })
+        reducer.addCase(RegisterUser.rejected,(state,action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
     }
 })
 
 export {
-    LoginUser
+    LoginUser,
+    RegisterUser
+
 }
 export default AuthSlice.reducer

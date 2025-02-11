@@ -7,6 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import toast from "react-hot-toast"
 import { Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,20 +17,19 @@ import { useDispatch, useSelector } from "react-redux"
 import { LoginUser } from "@/Slices/AuthSlice"
 export function LoginForm() {
 
-    
-
     const { register, handleSubmit, formState: { errors } } = useForm()
     const dispatch = useDispatch()
     const loadingState = useSelector((state) => state.Auth.loading)
     const error = useSelector((state) => state.Auth.error)
     const navigate = useNavigate()
+    
     const handlelogin = async (data) => {
         try {
-            console.log(data)
             await dispatch(LoginUser(data)).unwrap()
+            toast.success("Logged in successfully!")
             navigate("/templates")
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
 
@@ -59,8 +59,8 @@ export function LoginForm() {
                                             required: "email is required"
                                         })}
                                     />
-                                    {errors.email  && <div className="text-red-600">{errors.email.message
-                                            }</div>}
+                                    {errors.email && <div className="text-red-600">{errors.email.message
+                                    }</div>}
                                 </div>
                                 <div className="grid gap-2">
                                     <div className="flex items-center">
@@ -76,8 +76,8 @@ export function LoginForm() {
                                         {...register("password", {
                                             required: "password is required"
                                         })} />
-                                        {errors.password  && <div className="text-red-600">{errors.password.message
-                                            }</div>}
+                                    {errors.password && <div className="text-red-600">{errors.password.message
+                                    }</div>}
                                 </div>
                                 {loadingState ? (<Button disabled>
                                     <Loader2 className="animate-spin" />
