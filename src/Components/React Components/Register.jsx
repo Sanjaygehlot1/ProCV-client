@@ -110,7 +110,9 @@ export function Register() {
                 {errors.confirmPassword && <div className="text-red-600">{errors.confirmPassword.message
                 }</div>}
               </div>
-              
+              <Button type="submit" className="w-full">
+                Sign Up
+              </Button>
             </div>
           </form>
         </CardContent>

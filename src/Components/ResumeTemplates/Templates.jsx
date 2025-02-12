@@ -7,8 +7,9 @@ const ResumePage = ({ children }) => (
       height: "11in",
       margin: "0.5in auto",
       fontSize: "12pt",
+      fontFamily: "'Roboto', sans-serif",
     }}
-    className="bg-white shadow overflow-hidden p-4"
+    className="bg-white shadow-xl overflow-hidden p-4"
   >
     {children}
   </div>
@@ -16,438 +17,241 @@ const ResumePage = ({ children }) => (
 
 export const TemplateOne = ({ data }) => (
   <ResumePage>
-    <header className="border-b pb-4 mb-4">
-      <h1 className="text-4xl font-bold">
-        {data.firstName} {data.lastName || ""}
+    <header className="text-center mb-8">
+      <h1
+        className="text-5xl font-bold text-blue-800 mb-2"
+        style={{ fontFamily: "'Playfair Display', serif" }}
+      >
+        {data.firstName} {data.lastName}
       </h1>
-      <p className="text-gray-600">
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p className="text-gray-600">
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
+      <div className="flex justify-center space-x-4 text-gray-600">
+        <p>📧 {data.email}</p>
+        <p>📱 {data.phoneNumber || 'N/A'}</p>
+        <p>📍 {data.address.city}, {data.address.country}</p>
+      </div>
+      <div className="h-1 bg-blue-200 w-24 mx-auto mt-4 rounded-full" />
     </header>
-    <section className="mb-4">
-      <h2 className="text-2xl font-semibold mb-2">About</h2>
-      <p>{data.about}</p>
-    </section>
-    <section className="mb-4">
-      <h2 className="text-2xl font-semibold mb-2">Education</h2>
-      <p className="font-semibold">
-        {data.college?.name} ({data.college?.degree})
-      </p>
-      <p>{data.college?.location}</p>
-      <p>
-        Graduated: {data.college?.graduation?.month || ""}{" "}
-        {data.college?.graduation?.year || ""}
-      </p>
-    </section>
-    <section className="mb-4">
-      <h2 className="text-2xl font-semibold mb-2">Experience</h2>
-      <p>{data.previousJob?.companyName || ""}</p>
-      <p>{data.previousJob?.title}</p>
-      <p>
-        {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-      </p>
-    </section>
-    <section>
-      <h2 className="text-2xl font-semibold mb-2">Skills</h2>
-      <ul className="list-disc list-inside">
-        {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-      </ul>
+
+    <section className="grid grid-cols-3 gap-8">
+      <div className="space-y-6">
+        <div className="bg-blue-50 p-4 rounded-lg">
+          <h2 className="text-xl font-bold text-blue-800 mb-2">Skills</h2>
+          <ul className="space-y-2">
+            {data.skills.map((skill, index) => (
+              <li key={index} className="flex items-center">
+                <span className="w-2 h-2 bg-blue-600 rounded-full mr-2" />
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-xl font-bold text-blue-800 mb-2">Education</h2>
+          <div className="space-y-2">
+            <p className="font-semibold">{data.college.name}</p>
+            <p>{data.college.degree.degreeName} in {data.college.degree.field}</p>
+            <p className="text-sm text-gray-600">
+              {data.college.graduation.month} {data.college.graduation.year}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="col-span-2 space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-blue-800 mb-4 border-b-2 border-blue-200 pb-2">
+            Professional Summary
+          </h2>
+          <p className="text-gray-700 leading-relaxed">{data.about}</p>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-blue-800 mb-4 border-b-2 border-blue-200 pb-2">
+            Work Experience
+          </h2>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-bold text-lg">{data.previousJob.title}</h3>
+              <p className="text-blue-600">{data.previousJob.companyName}</p>
+              <p className="text-sm text-gray-500">
+                {data.previousJob?.startDate?.startMonth} {data.previousJob?.startDate?.startYear} -
+                {data.previousJob?.endDate?.endMonth} {data.previousJob?.endDate?.endYear}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </ResumePage>
 );
 
 export const TemplateTwo = ({ data }) => (
   <ResumePage>
-    <div className="flex flex-col md:flex-row h-full">
-      <aside className="md:w-1/3 bg-blue-500 text-white p-4">
-        <h1 className="text-3xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p>{data.email}</p>
-        <p>{data.phoneNumber || "N/A"}</p>
-        <p>
-          {data.address?.city}, {data.address?.country}
-        </p>
-        <p>{data.address?.pinCode}</p>
-      </aside>
-      <main className="md:w-2/3 p-4 bg-white">
-        <section className="mb-4">
-          <h2 className="text-xl font-semibold">About</h2>
-          <p>{data.about}</p>
-        </section>
-        <section className="mb-4">
-          <h2 className="text-xl font-semibold">Education</h2>
-          <p className="font-bold">
-            {data.college?.name} ({data.college?.degree})
+    <div
+      className="h-full bg-gradient-to-br from-purple-100 to-indigo-100 p-8"
+      style={{ fontFamily: "'Nunito', sans-serif" }}
+    >
+      <header className="flex items-center mb-8">
+        <div className="w-32 h-32 bg-indigo-200 rounded-full mr-6 flex items-center justify-center">
+          <span className="text-4xl">👤</span>
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold text-indigo-900">
+            {data.firstName} <span className="text-indigo-600">{data.lastName}</span>
+          </h1>
+          <p className="text-indigo-700">
+            {data.previousJob.title} @ {data.previousJob.companyName}
           </p>
-          <p>{data.college?.location}</p>
-          <p>
-            Graduated: {data.college?.graduation?.month || ""}{" "}
-            {data.college?.graduation?.year || ""}
-          </p>
-        </section>
-        <section className="mb-4">
-          <h2 className="text-xl font-semibold">Experience</h2>
-          <p>{data.previousJob?.companyName || ""}</p>
-          <p>{data.previousJob?.title}</p>
-          <p>
-            {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-          </p>
-        </section>
-        <section>
-          <h2 className="text-xl font-semibold">Skills</h2>
-          <ul className="list-disc list-inside">
-            {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-          </ul>
-        </section>
-      </main>
+        </div>
+      </header>
+
+      <div className="grid grid-cols-5 gap-8">
+        <div className="col-span-2 space-y-6">
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <h2 className="text-xl font-bold text-indigo-900 mb-4">Contact</h2>
+            <ul className="space-y-3">
+              <li className="flex items-center">
+                <span className="mr-2">📧</span>
+                {data.email}
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">📍</span>
+                {data.address.city}, {data.address.country}
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <h2 className="text-xl font-bold text-indigo-900 mb-4">Top Skills</h2>
+            <div className="flex flex-wrap gap-2">
+              {data.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="col-span-3 space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-indigo-900 mb-4">About Me</h2>
+            <p className="text-gray-700 leading-relaxed">{data.about}</p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-indigo-900 mb-4">Career Timeline</h2>
+            <div className="space-y-4">
+              <div className="border-l-4 border-indigo-200 pl-4">
+                <h3 className="font-bold text-lg">{data.previousJob.title}</h3>
+                <p className="text-indigo-600">{data.previousJob.companyName}</p>
+                <p className="text-sm text-gray-500">
+                  {data.previousJob?.startDate?.startMonth} {data.previousJob?.startDate?.startYear} -
+                  {data.previousJob?.endDate?.endMonth} {data.previousJob?.endDate?.endYear}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-indigo-900 mb-4">Education</h2>
+            <div className="bg-white p-6 rounded-xl shadow-sm">
+              <h3 className="font-bold">{data.college.name}</h3>
+              <p className="text-indigo-600">
+                {data.college.degree.degreeName} in {data.college.degree.field}
+              </p>
+              <p className="text-sm text-gray-500">
+                Graduated: {data.college.graduation.month} {data.college.graduation.year}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </ResumePage>
 );
 
 export const TemplateThree = ({ data }) => (
   <ResumePage>
-    <header className="mb-6 text-center">
-      <h1 className="text-4xl font-bold">
-        {data.firstName} {data.lastName || ""}
-      </h1>
-      <p className="text-gray-600">
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p className="text-gray-600">
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
-    </header>
-    <div className="space-y-6">
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">About</h2>
-        <p>{data.about}</p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Education</h2>
-        <div className="ml-4">
-          <p className="font-bold">
-            {data.college?.name} ({data.college?.degree})
-          </p>
-          <p>{data.college?.location}</p>
-          <p>
-            Graduated: {data.college?.graduation?.month || ""}{" "}
-            {data.college?.graduation?.year || ""}
-          </p>
+    <div
+      className="h-full p-12 space-y-8"
+      style={{ fontFamily: "'Inter', sans-serif" }}
+    >
+      <header className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          {data.firstName} {data.lastName}
+        </h1>
+        <div className="flex justify-center space-x-4 text-gray-500">
+          <p>{data.email}</p>
+          <p>•</p>
+          <p>{data.address.city}, {data.address.country}</p>
         </div>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Experience</h2>
-        <div className="ml-4">
-          <p>{data.previousJob?.companyName || ""}</p>
-          <p>{data.previousJob?.title}</p>
-          <p>
-            {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-          </p>
-        </div>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-        </ul>
-      </section>
-    </div>
-  </ResumePage>
-);
+      </header>
 
-export const TemplateFour = ({ data }) => (
-  <ResumePage>
-    <div className="flex flex-col md:flex-row h-full">
-      <main className="md:w-2/3 p-4">
-        <h1 className="text-4xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p className="text-gray-600">
-          {data.email} | {data.phoneNumber || "N/A"}
-        </p>
-        <p className="text-gray-600">
-          {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-        </p>
-        <section className="mt-4">
-          <h2 className="text-2xl font-semibold">About</h2>
-          <p>{data.about}</p>
-        </section>
-        <section className="mt-4">
-          <h2 className="text-2xl font-semibold">Experience</h2>
-          <p>{data.previousJob?.companyName || ""}</p>
-          <p>{data.previousJob?.title}</p>
-          <p>
-            {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-          </p>
-        </section>
-      </main>
-      <aside className="md:w-1/3 p-4 bg-white border-l">
-        <section className="mb-4">
-          <h2 className="text-xl font-semibold">Education</h2>
-          <p className="font-bold">
-            {data.college?.name} ({data.college?.degree})
-          </p>
-          <p>{data.college?.location}</p>
-          <p>
-            Graduated: {data.college?.graduation?.month || ""}{" "}
-            {data.college?.graduation?.year || ""}
-          </p>
-        </section>
-        <section>
-          <h2 className="text-xl font-semibold">Skills</h2>
-          <ul className="list-disc list-inside">
-            {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-          </ul>
-        </section>
-      </aside>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateFive = ({ data }) => (
-  <ResumePage>
-    <div className="bg-indigo-600 text-white p-6">
-      <h1 className="text-4xl font-bold">
-        {data.firstName} {data.lastName || ""}
-      </h1>
-      <p>
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p>
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
-    </div>
-    <div className="p-6">
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">About</h2>
-        <p>{data.about}</p>
-      </section>
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">Education</h2>
-        <p className="font-bold">
-          {data.college?.name} ({data.college?.degree})
-        </p>
-        <p>{data.college?.location}</p>
-        <p>
-          Graduated: {data.college?.graduation?.month || ""}{" "}
-          {data.college?.graduation?.year || ""}
-        </p>
-      </section>
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">Experience</h2>
-        <p>{data.previousJob?.companyName || ""}</p>
-        <p>{data.previousJob?.title}</p>
-        <p>
-          {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-        </p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-        </ul>
-      </section>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateSix = ({ data }) => (
-  <ResumePage>
-    <header className="bg-gray-800 text-white p-6 text-center">
-      <h1 className="text-4xl font-bold">
-        {data.firstName} {data.lastName || ""}
-      </h1>
-      <p>
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p>
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
-    </header>
-    <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">About</h2>
-        <p>{data.about}</p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Education</h2>
-        <p className="font-bold">
-          {data.college?.name} ({data.college?.degree})
-        </p>
-        <p>{data.college?.location}</p>
-        <p>
-          Graduated: {data.college?.graduation?.month || ""}{" "}
-          {data.college?.graduation?.year || ""}
-        </p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Experience</h2>
-        <p>{data.previousJob?.companyName || ""}</p>
-        <p>{data.previousJob?.title}</p>
-        <p>
-          {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-        </p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ?data.skills.map((skill) => (
-            <li key={skill}>{skill}</li>
-          )): ""}
-        </ul>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold border-b pb-2">Background</h2>
-        <p>{data.about}</p>
-      </section>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateSeven = ({ data }) => (
-  <ResumePage>
-    <header className="mb-4">
-      <h1 className="text-3xl font-bold">
-        {data.firstName} {data.lastName || ""}
-      </h1>
-      <p>
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p>
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
-    </header>
-    <section className="mb-4">
-      <h2 className="text-xl font-semibold">About</h2>
-      <p>{data.about}</p>
-    </section>
-    <section className="mb-4">
-      <h2 className="text-xl font-semibold">Education</h2>
-      <p className="font-bold">
-        {data.college?.name} ({data.college?.degree})
-      </p>
-      <p>{data.college?.location}</p>
-      <p>
-        Graduated: {data.college?.graduation?.month || ""}{" "}
-        {data.college?.graduation?.year || ""}
-      </p>
-    </section>
-    <section className="mb-4">
-      <h2 className="text-xl font-semibold">Experience</h2>
-      <p>{data.previousJob?.companyName || ""}</p>
-      <p>{data.previousJob?.title}</p>
-      <p>
-        {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-      </p>
-    </section>
-    <section>
-      <h2 className="text-xl font-semibold">Skills</h2>
-      <ul className="list-disc list-inside">
-        {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-      </ul>
-    </section>
-  </ResumePage>
-);
-
-export const TemplateEight = ({ data }) => (
-  <ResumePage>
-    <div className="flex h-full">
-      <aside className="w-1/3 bg-purple-700 text-white p-4">
-        <h1 className="text-3xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p>{data.email}</p>
-        <p>{data.phoneNumber || "N/A"}</p>
-        <p>
-          {data.address?.city}, {data.address?.country}
-        </p>
-        <p>{data.address?.pinCode}</p>
-        <section className="mt-4">
-          <h2 className="text-xl font-semibold">Skills</h2>
-          <ul className="list-disc list-inside">
-            {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-          </ul>
-        </section>
-      </aside>
-      <main className="w-2/3 p-4 bg-white">
-        <section className="mb-4">
-          <h2 className="text-2xl font-semibold border-b pb-2">About</h2>
-          <p>{data.about}</p>
-        </section>
-        <section className="mb-4">
-          <h2 className="text-2xl font-semibold border-b pb-2">Education</h2>
-          <p className="font-bold">
-            {data.college?.name} ({data.college?.degree})
-          </p>
-          <p>{data.college?.location}</p>
-          <p>
-            Graduated: {data.college?.graduation?.month || ""}{" "}
-            {data.college?.graduation?.year || ""}
-          </p>
-        </section>
-        <section>
-          <h2 className="text-2xl font-semibold border-b pb-2">Experience</h2>
-          <p>{data.previousJob?.companyName || ""}</p>
-          <p>{data.previousJob?.title}</p>
-          <p>
-            {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-          </p>
-        </section>
-      </main>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateNine = ({ data }) => (
-  <ResumePage>
-    <div className="border h-full flex flex-col">
-      <div className="p-6 border-b">
-        <h1 className="text-4xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p>
-          {data.email} | {data.phoneNumber || "N/A"}
-        </p>
-        <p>
-          {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-        </p>
-      </div>
-      <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow">
-        <div>
-          <section className="mb-4">
-            <h2 className="text-2xl font-semibold">About</h2>
-            <p>{data.about}</p>
-          </section>
+      <div className="grid grid-cols-3 gap-8">
+        <div className="col-span-1 space-y-8">
           <section>
-            <h2 className="text-2xl font-semibold">Skills</h2>
-            <ul className="list-disc list-inside">
-              {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
+              Education
+            </h2>
+            <div>
+              <p className="font-semibold">{data.college.name}</p>
+              <p className="text-sm text-gray-600">
+                {data.college.degree.degreeName} in {data.college.degree.field}
+              </p>
+              <p className="text-xs text-gray-400">
+                {data.college.graduation.month} {data.college.graduation.year}
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
+              Skills
+            </h2>
+            <ul className="space-y-2">
+              {data.skills.map((skill, index) => (
+                <li
+                  key={index}
+                  className="text-sm text-gray-700 before:content-['–'] before:mr-2"
+                >
+                  {skill}
+                </li>
+              ))}
             </ul>
           </section>
         </div>
-        <div>
-          <section className="mb-4">
-            <h2 className="text-2xl font-semibold">Education</h2>
-            <p className="font-bold">
-              {data.college?.name} ({data.college?.degree})
-            </p>
-            <p>{data.college?.location}</p>
-            <p>
-              Graduated: {data.college?.graduation?.month || ""}{" "}
-              {data.college?.graduation?.year || ""}
-            </p>
-          </section>
+
+        <div className="col-span-2 space-y-8">
           <section>
-            <h2 className="text-2xl font-semibold">Experience</h2>
-            <p>{data.previousJob?.companyName || ""}</p>
-            <p>{data.previousJob?.title}</p>
-            <p>
-              {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-            </p>
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
+              Profile
+            </h2>
+            <p className="text-gray-700 leading-relaxed max-w-2xl">{data.about}</p>
+          </section>
+
+          <section>
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
+              Experience
+            </h2>
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{data.previousJob.title}</h3>
+                    <p className="text-gray-600">{data.previousJob.companyName}</p>
+                  </div>
+                  <p className="text-sm text-gray-400">
+                    {data.previousJob?.startDate?.startMonth} {data.previousJob?.startDate?.startYear} -
+                    {data.previousJob?.endDate?.endMonth} {data.previousJob?.endDate?.endYear}
+                  </p>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </div>
@@ -455,295 +259,3 @@ export const TemplateNine = ({ data }) => (
   </ResumePage>
 );
 
-export const TemplateTen = ({ data }) => (
-  <ResumePage>
-    <div className="h-40 bg-gray-300 flex items-center justify-center">
-      <span className="text-2xl text-gray-700">Header Image</span>
-    </div>
-    <div className="p-6">
-      <header className="mb-4 text-center">
-        <h1 className="text-4xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p>
-          {data.email} | {data.phoneNumber || "N/A"}
-        </p>
-        <p>
-          {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-        </p>
-      </header>
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">About</h2>
-        <p>{data.about}</p>
-      </section>
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">Education</h2>
-        <p className="font-bold">
-          {data.college?.name} ({data.college?.degree})
-        </p>
-        <p>{data.college?.location}</p>
-        <p>
-          Graduated: {data.college?.graduation?.month || ""}{" "}
-          {data.college?.graduation?.year || ""}
-        </p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold">Experience</h2>
-        <p>{data.previousJob?.companyName || ""}</p>
-        <p>{data.previousJob?.title}</p>
-        <p>
-          {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-        </p>
-      </section>
-      <section className="mt-4">
-        <h2 className="text-2xl font-semibold">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-        </ul>
-      </section>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateEleven = ({ data }) => (
-  <ResumePage>
-    <div className="flex h-full">
-      <aside className="w-1/3 bg-green-600 text-white p-6">
-        <h1 className="text-3xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p>{data.email}</p>
-        <p>{data.phoneNumber || "N/A"}</p>
-        <p>
-          {data.address?.city}, {data.address?.country}
-        </p>
-        <p>{data.address?.pinCode}</p>
-        <section className="mt-4">
-          <h2 className="text-xl font-semibold">Skills</h2>
-          <ul className="list-disc list-inside">
-            {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-          </ul>
-        </section>
-      </aside>
-      <main className="w-2/3 p-6 bg-white">
-        <section className="mb-4">
-          <h2 className="text-2xl font-semibold border-b pb-2">About</h2>
-          <p>{data.about}</p>
-        </section>
-        <section className="mb-4">
-          <h2 className="text-2xl font-semibold border-b pb-2">Education</h2>
-          <p className="font-bold">
-            {data.college?.name} ({data.college?.degree})
-          </p>
-          <p>{data.college?.location}</p>
-          <p>
-            Graduated: {data.college?.graduation?.month || ""}{" "}
-            {data.college?.graduation?.year || ""}
-          </p>
-        </section>
-        <section>
-          <h2 className="text-2xl font-semibold border-b pb-2">Experience</h2>
-          <p>{data.previousJob?.companyName || ""}</p>
-          <p>{data.previousJob?.title}</p>
-          <p>
-            {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-          </p>
-        </section>
-      </main>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateTwelve = ({ data }) => (
-  <ResumePage>
-    <header className="text-center mb-6">
-      <h1 className="text-4xl font-bold">
-        {data.firstName} {data.lastName || ""}
-      </h1>
-      <p>
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p>
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
-    </header>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <section className="bg-white p-4 shadow">
-        <h2 className="text-2xl font-semibold mb-2">Education</h2>
-        <p className="font-bold">
-          {data.college?.name} ({data.college?.degree})
-        </p>
-        <p>{data.college?.location}</p>
-        <p>
-          Graduated: {data.college?.graduation?.month || ""}{" "}
-          {data.college?.graduation?.year || ""}
-        </p>
-      </section>
-      <section className="bg-white p-4 shadow">
-        <h2 className="text-2xl font-semibold mb-2">Experience</h2>
-        <p>{data.previousJob?.companyName || ""}</p>
-        <p>{data.previousJob?.title}</p>
-        <p>
-          {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-        </p>
-      </section>
-    </div>
-    <section className="mt-6 bg-white p-4 shadow">
-      <h2 className="text-2xl font-semibold mb-2">About & Skills</h2>
-      <p>{data.about}</p>
-      <p className="mt-2">
-        <strong>Skills:</strong>
-      </p>
-      <ul className="list-disc list-inside">
-        {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-      </ul>
-    </section>
-  </ResumePage>
-);
-
-export const TemplateThirteen = ({ data }) => (
-  <ResumePage>
-    <div
-      className="h-32 bg-cover bg-center"
-      style={{ backgroundImage: "url(https://via.placeholder.com/600x200)" }}
-    ></div>
-    <div className="p-6">
-      <header className="mb-4 text-center">
-        <h1 className="text-4xl font-bold">
-          {data.firstName} {data.lastName || ""}
-        </h1>
-        <p>
-          {data.email} | {data.phoneNumber || "N/A"}
-        </p>
-        <p>
-          {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-        </p>
-      </header>
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">About</h2>
-        <p>{data.about}</p>
-      </section>
-      <section className="mb-4">
-        <h2 className="text-2xl font-semibold">Education</h2>
-        <p className="font-bold">
-          {data.college?.name} ({data.college?.degree})
-        </p>
-        <p>{data.college?.location}</p>
-        <p>
-          Graduated: {data.college?.graduation?.month || ""}{" "}
-          {data.college?.graduation?.year || ""}
-        </p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold">Experience</h2>
-        <p>{data.previousJob?.companyName || ""}</p>
-        <p>{data.previousJob?.title}</p>
-        <p>
-          {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-        </p>
-      </section>
-      <section className="mt-4">
-        <h2 className="text-2xl font-semibold">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-        </ul>
-      </section>
-    </div>
-  </ResumePage>
-);
-
-export const TemplateFourteen = ({ data }) => (
-  <ResumePage>
-    <header className="mb-4 border-b pb-4 text-center">
-      <h1 className="text-4xl font-bold">
-        {data.firstName} {data.lastName || ""}
-      </h1>
-      <p>
-        {data.email} | {data.phoneNumber || "N/A"}
-      </p>
-      <p>
-        {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-      </p>
-    </header>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Experience</h2>
-        <p>{data.previousJob?.companyName || ""}</p>
-        <p>{data.previousJob?.title}</p>
-        <p>
-          {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-        </p>
-      </section>
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-        </ul>
-      </section>
-    </div>
-    <section className="mt-4">
-      <h2 className="text-2xl font-semibold">About</h2>
-      <p>{data.about}</p>
-    </section>
-    <section className="mt-4 border-t pt-4">
-      <h2 className="text-2xl font-semibold">Education</h2>
-      <p className="font-bold">
-        {data.college?.name} ({data.college?.degree})
-      </p>
-      <p>{data.college?.location}</p>
-      <p>
-        Graduated: {data.college?.graduation?.month || ""}{" "}
-        {data.college?.graduation?.year || ""}
-      </p>
-    </section>
-  </ResumePage>
-);
-
-export const TemplateFifteen = ({ data }) => (
-  <ResumePage>
-    <div className="space-y-4">
-      <div className="p-6">
-        <header className="mb-4 text-center">
-          <h1 className="text-4xl font-bold">
-            {data.firstName} {data.lastName || ""}
-          </h1>
-          <p>
-            {data.email} | {data.phoneNumber || "N/A"}
-          </p>
-          <p>
-            {data.address?.city}, {data.address?.country} - {data.address?.pinCode}
-          </p>
-        </header>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-6 shadow rounded bg-white">
-          <h2 className="text-2xl font-semibold mb-2">Education</h2>
-          <p className="font-bold">
-            {data.college?.name} ({data.college?.degree})
-          </p>
-          <p>{data.college?.location}</p>
-          <p>
-            Graduated: {data.college?.graduation?.month || ""}{" "}
-            {data.college?.graduation?.year || ""}
-          </p>
-        </div>
-        <div className="p-6 shadow rounded bg-white">
-          <h2 className="text-2xl font-semibold mb-2">Experience</h2>
-          <p>{data.previousJob?.companyName || ""}</p>
-          <p>{data.previousJob?.title}</p>
-          <p>
-            {data.previousJob?.startDate || ""} - {data.previousJob?.endDate || ""}
-          </p>
-        </div>
-      </div>
-      <div className="p-6 shadow rounded bg-white">
-        <h2 className="text-2xl font-semibold mb-2">About</h2>
-        <p>{data.about}</p>
-        <h2 className="text-2xl font-semibold mt-4 mb-2">Skills</h2>
-        <ul className="list-disc list-inside">
-          {data.skills.length !== 0 ? data.skills.map((skill) => <li key={skill}>{skill}</li>): ""}
-        </ul>
-      </div>
-    </div>
-  </ResumePage>
-);

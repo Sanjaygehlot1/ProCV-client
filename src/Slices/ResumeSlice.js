@@ -88,6 +88,22 @@ const SaveSkillsDetails = createAsyncThunk("resume/skills",async (data,{rejectWi
     }
 
 }) 
+const SaveAboutDetails = createAsyncThunk("resume/summary",async (data,{rejectWithValue})=>{
+    console.log(data)
+    try {
+        if(data){
+         const Response = await AxiosInstance.post(`/resume/background/${data.resumeId}`,{background : data.data})
+
+         if(Response){
+            console.log(Response)
+            return Response.data.data
+         }
+        }
+    } catch (error) {
+        return  rejectWithValue(error.response.message)
+    }
+
+}) 
 const GetResumeById = createAsyncThunk("resume/get",async (resumeId,{rejectWithValue})=>{
     console.log(resumeId)
     try {
@@ -187,6 +203,19 @@ const ResumeSlice = createSlice({
             state.loading = false,
             state.error = action.payload
         })
+        reducer.addCase(SaveAboutDetails.pending,(state)=>{
+            state.loading = true
+            state.error = null
+        })
+        reducer.addCase(SaveAboutDetails.fulfilled,(state,action)=>{
+            state.loading = false,
+            state.resume = action.payload,
+            state.error = null
+        })
+        reducer.addCase(SaveAboutDetails.rejected,(state,action)=>{
+            state.loading = false,
+            state.error = action.payload
+        })
     }
 })
 
@@ -196,7 +225,8 @@ export {
     SavePersonalDetails,
     SaveEducationInfo,
     SaveExperienceDetails,
-    SaveSkillsDetails
+    SaveSkillsDetails,
+    SaveAboutDetails
 }
 
 export default ResumeSlice.reducer

@@ -18,6 +18,7 @@ import Education from './Components/React Components/Education.jsx';
 import './index.css';
 import Experience from './Components/React Components/Experience';
 import Skills from './Components/React Components/Skills';
+import About from './Components/React Components/About';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
           { element: <Education />, path: '/create/education' },
           { element: <Experience/>,  path: '/create/professional-experience' },
           { element: <Skills/>,  path: '/create/skills' },
+          { element: <About/>,  path: '/create/summary' },
+          { element: <FinalPage/>,  path: '/create/finalize' },
         ],
       },
     ],

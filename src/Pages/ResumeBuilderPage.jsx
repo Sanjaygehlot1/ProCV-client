@@ -1,18 +1,13 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { NavLink } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { Outlet } from "react-router-dom";
 export default function ResumeBuilder() {
 
     const [progress] = useState(30);
     
     return (
-        <div className="flex min-h-screen">
+        <div className="flex w-full min-h-screen">
             <aside className="w-64 bg-blue-900 text-white p-6 flex flex-col gap-4">
                 <h2 className="text-xl font-semibold">ProCV</h2>
                 <ul className="space-y-2">

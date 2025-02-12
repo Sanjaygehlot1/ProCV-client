@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,6 +9,7 @@ import { SaveExperienceDetails } from '@/Slices/ResumeSlice';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
+import { es2015 } from 'globals';
 
 function Experience() {
 
@@ -24,7 +25,7 @@ function Experience() {
             if(data){
                 await dispatch(SaveExperienceDetails({resumeId : resumeData._id, data})).unwrap()
                 toast.success("Details saved successfully")
-                navigate("/skills")
+                navigate("/create/skills")
             }
         } catch (err) {
             toast.error(error)
@@ -32,6 +33,14 @@ function Experience() {
             console.log(err)
         }
     }
+
+     useEffect(() => {
+            setValue("title", resumeData.previousJob?.title)
+            setValue("companyName", resumeData.previousJob?.companyName)
+            setValue("location", resumeData.previousJob?.location)
+            setValue("remote", resumeData.previousJob?.remote)
+            setValue("currentlyWorking", resumeData.previousJob?.currentlyWorking)
+        }, [resumeData])
 
     return (
         <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -60,7 +69,7 @@ function Experience() {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <Checkbox id="remote" onChange={(value)=>setValue("remote",value)}/>
+                    <Checkbox id="remote" onCheckedChange={(value)=>setValue("remote",value)}/>
                     <label htmlFor="remote" className="text-sm">Remote</label>
                 </div>
 
@@ -129,7 +138,7 @@ function Experience() {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <Checkbox id="currently-working" onChange={(value)=>setValue("currentlyWorking",value)} />
+                    <Checkbox id="currently-working" onCheckedChange={(value)=>setValue("currentlyWorking",value)} />
                     <label htmlFor="currently-working" className="text-sm">I currently work here</label>
                 </div>
 

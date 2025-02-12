@@ -42,12 +42,12 @@ function Education() {
     }
 
     useEffect(() => {
-        setValue("name", resumeDetails.college.name)
-        setValue("degreeName", resumeDetails.college.degree.degreeName)
-        setValue("field", resumeDetails.college.degree.field)
-        setValue("location", resumeDetails.college.location)
-        setValue("month", resumeDetails.college.graduation.month)
-        setValue("year", resumeDetails.college.graduation.year)
+        setValue("name", resumeDetails.college?.name)
+        setValue("degreeName", resumeDetails.college?.degree?.degreeName)
+        setValue("field", resumeDetails.college?.degree?.field)
+        setValue("location", resumeDetails.college?.location)
+        setValue("month", resumeDetails.college?.graduation?.month)
+        setValue("year", resumeDetails.college?.graduation?.year)
     }, [resumeDetails])
 
 
