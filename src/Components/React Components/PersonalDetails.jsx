@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,21 +9,77 @@ import { SavePersonalDetails } from '@/Slices/ResumeSlice';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import Preview from '@/Utilities/Preview';
+const resumeTemplates = [
+    {
+        title: "Contemporary",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/dugkptcrlaweo0n1urda",
+
+        code: "101",
+    },
+    {
+        title: "Current",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/ctb4amkoauqibexb2dka",
+        code: "102",
+    },
+    {
+        title: "Innovative",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/asa1zghma67j3dd1tanv",
+        code: "103",
+    },
+    {
+        title: "Basic",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/wrkmaio2ty1rhknxokwi",
+        code: "104",
+    },
+    {
+        title: "Polished",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/xksus56hwkuxbtvbzd8g",
+        code: "105",
+    },
+    {
+        title: "Polished",
+        image: " https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/qhzrfdadelagrerlzipx",
+        code: "106",
+    },
+    {
+        title: "Polished",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/qvfqfxgttsyiw9qw7a6p",
+        code: "107",
+    },
+    {
+        title: "Polished",
+
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/qbuofez5medashgpvdsa",
+        code: "108",
+    },
+    {
+        title: "Polished",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/s3k6okl2tolpwmst69cp",
+        code: "109",
+    },
+    {
+        title: "Polished",
+        image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/ub1ul5pkgwsbts0yjolz",
+        code: "110",
+    },
+];
+
+
 function PersonalDetails() {
-    const { register, handleSubmit, formState: { errors } ,setValue} = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const loadingState = useSelector((state) => state.Resume.loading)
     const error = useSelector((state) => state.Resume.error)
     const resumeDetails = useSelector((state) => state.Resume.resume)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    console.log(resumeDetails)
+    const [isOpen ,setisOpen ] = useState()
 
     const submit = async (data) => {
         try {
             if (data) {
                 console.log(resumeDetails)
-                await dispatch(SavePersonalDetails({resumeId : resumeDetails._id, data:data})).unwrap()
+                await dispatch(SavePersonalDetails({ resumeId: resumeDetails._id, data: data })).unwrap()
                 toast.success("Details saved successfully")
                 navigate("/create/education")
             }
@@ -35,7 +91,8 @@ function PersonalDetails() {
     };
 
 
-    useEffect(()=>{
+
+    useEffect(() => {
         setValue("firstName", resumeDetails.firstName)
         setValue("lastName", resumeDetails.lastName)
         setValue("email", resumeDetails.email)
@@ -44,12 +101,13 @@ function PersonalDetails() {
         setValue("country", resumeDetails.address.country)
         setValue("phoneNumber", resumeDetails.phoneNumber)
 
-    },[resumeDetails])
+    }, [resumeDetails])
 
 
-    
+
 
     return (
+        <div>
         <main className="flex-1 p-10 grid grid-cols-2 gap-10">
             <form onSubmit={handleSubmit(submit)}>
                 <div>
@@ -79,7 +137,7 @@ function PersonalDetails() {
                             type: "text"
                         }, {
                             label: "Phone",
-                            name: "phone",
+                            name: "phoneNumber",
                             type: "text"
                         }, {
                             label: "Email *",
@@ -106,22 +164,37 @@ function PersonalDetails() {
                     </div>
 
                     <div className="mt-6 flex justify-between max-w-3xl">
-                        <Button variant="outline">Preview</Button>
-                        {loadingState ? (<Button disabled  className="bg-red-500 hover:bg-red-600">
+                        <Button className="rounded-full" type="button" onClick={()=>setisOpen(true)} variant="">Preview</Button>
+                        {loadingState ? (<Button disabled className="bg-red-500 rounded-full hover:bg-red-600">
                             <Loader2 className="animate-spin" />
                             Please wait
-                        </Button>) : (<Button type="submit" className="bg-red-500 hover:bg-red-600">Next: Education</Button>)}
+                        </Button>) : (<Button type="submit" className="bg-red-500 rounded-full hover:bg-red-600">Next: Education</Button>)}
                     </div>
                 </div>
             </form>
 
             <Card>
                 <CardContent className="p-6">
-                    <h2 className="text-xl font-semibold">Live Preview</h2>
-
+                    <h2 className="text-xl font-semibold"> Preview </h2>
+                    {resumeTemplates.map((template,index) => {
+                        return template.code === resumeDetails.template && (
+                            <Card key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
+                                <img src={template.image} alt={template.title} className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
+                                    <Button type="button" className="bg-white text-black font-semibold" onClick={()=>setisOpen(true)}>
+                                        Open Preview
+                                    </Button>
+                                </div>
+                            </Card>
+                        )
+                    })}
                 </CardContent>
             </Card>
+            
         </main>
+        {isOpen && (<Preview Open={isOpen} onClose={()=>setisOpen(false)}/>)}
+
+        </div>
     );
 }
 

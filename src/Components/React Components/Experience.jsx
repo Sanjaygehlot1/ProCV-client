@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,21 +9,21 @@ import { SaveExperienceDetails } from '@/Slices/ResumeSlice';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
-import { es2015 } from 'globals';
-
+import Preview from '@/Utilities/preview';
 function Experience() {
 
-    const loadingState = useSelector((state)=>state.Resume.loading)
-    const error = useSelector((state)=>state.Resume.error)
-    const resumeData = useSelector((state)=>state.Resume.resume)
+    const loadingState = useSelector((state) => state.Resume.loading)
+    const error = useSelector((state) => state.Resume.error)
+    const resumeData = useSelector((state) => state.Resume.resume)
     const navigate = useNavigate()
-    const {register,handleSubmit,formState:{errors},setValue,setError} = useForm()
+    const { register, handleSubmit, formState: { errors }, setValue, setError } = useForm()
     const dispatch = useDispatch()
+    const [isOpen, setisOpen] = useState()
 
-    const submit = async (data)=>{
+    const submit = async (data) => {
         try {
-            if(data){
-                await dispatch(SaveExperienceDetails({resumeId : resumeData._id, data})).unwrap()
+            if (data) {
+                await dispatch(SaveExperienceDetails({ resumeId: resumeData._id, data })).unwrap()
                 toast.success("Details saved successfully")
                 navigate("/create/skills")
             }
@@ -34,13 +34,13 @@ function Experience() {
         }
     }
 
-     useEffect(() => {
-            setValue("title", resumeData.previousJob?.title)
-            setValue("companyName", resumeData.previousJob?.companyName)
-            setValue("location", resumeData.previousJob?.location)
-            setValue("remote", resumeData.previousJob?.remote)
-            setValue("currentlyWorking", resumeData.previousJob?.currentlyWorking)
-        }, [resumeData])
+    useEffect(() => {
+        setValue("title", resumeData.previousJob?.title)
+        setValue("companyName", resumeData.previousJob?.companyName)
+        setValue("location", resumeData.previousJob?.location)
+        setValue("remote", resumeData.previousJob?.remote)
+        setValue("currentlyWorking", resumeData.previousJob?.currentlyWorking)
+    }, [resumeData])
 
     return (
         <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -51,25 +51,25 @@ function Experience() {
                 <div className="space-y-1">
                     <label className="text-sm font-medium">Job Title *</label>
                     <Input placeholder="e.g. Retail Sales Associate"
-                    {...register("title",{
-                        required: "Job title is required."
-                    })} />
+                        {...register("title", {
+                            required: "Job title is required."
+                        })} />
                 </div>
 
                 <div className="space-y-1">
                     <label className="text-sm font-medium">Company Name</label>
-                    <Input placeholder="e.g. H&M" 
-                    {...register("companyName")}/>
+                    <Input placeholder="e.g. H&M"
+                        {...register("companyName")} />
                 </div>
 
                 <div className="space-y-1">
                     <label className="text-sm font-medium">Location</label>
                     <Input placeholder="e.g. New Delhi, India"
-                    {...register("location")} />
+                        {...register("location")} />
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <Checkbox id="remote" onCheckedChange={(value)=>setValue("remote",value)}/>
+                    <Checkbox id="remote" onCheckedChange={(value) => setValue("remote", value)} />
                     <label htmlFor="remote" className="text-sm">Remote</label>
                 </div>
 
@@ -77,7 +77,7 @@ function Experience() {
                     <div className="flex space-x-4">
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Start Date</label>
-                            <Select onValueChange={(value)=>setValue("startMonth",value)}>
+                            <Select onValueChange={(value) => setValue("startMonth", value)}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Month" />
                                 </SelectTrigger>
@@ -92,7 +92,7 @@ function Experience() {
 
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Year</label>
-                            <Select onValueChange={(value)=>setValue("startYear",value)}>
+                            <Select onValueChange={(value) => setValue("startYear", value)}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Year" />
                                 </SelectTrigger>
@@ -108,7 +108,7 @@ function Experience() {
                     <div className="flex space-x-4">
                         <div className="space-y-1">
                             <label className="text-sm font-medium">End Date</label>
-                            <Select onValueChange={(value)=>setValue("endMonth",value)}>
+                            <Select onValueChange={(value) => setValue("endMonth", value)}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Month" />
                                 </SelectTrigger>
@@ -123,7 +123,7 @@ function Experience() {
 
                         <div className="space-y-1">
                             <label className="text-sm font-medium">Year</label>
-                            <Select onValueChange={(value)=>setValue("endYear",value)}>
+                            <Select onValueChange={(value) => setValue("endYear", value)}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Year" />
                                 </SelectTrigger>
@@ -138,18 +138,22 @@ function Experience() {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <Checkbox id="currently-working" onCheckedChange={(value)=>setValue("currentlyWorking",value)} />
+                    <Checkbox id="currently-working" onCheckedChange={(value) => setValue("currentlyWorking", value)} />
                     <label htmlFor="currently-working" className="text-sm">I currently work here</label>
                 </div>
 
                 <div className="flex justify-between mt-6">
-                    <Button variant="outline">Preview</Button>
-                    {loadingState ? (<Button disabled className="bg-red-500 hover:bg-red-600">
+                    <Button variant="" className="rounded-full" onClick={(e) => {
+                        e.preventDefault()
+                        setisOpen(true)
+                    }}>Preview</Button>
+                    {loadingState ? (<Button disabled className="bg-red-500 rounded-full hover:bg-red-600">
                         <Loader2 className="animate-spin" />
                         Please wait
-                    </Button>) : (<Button type="submit" className="bg-red-500 hover:bg-red-600">Next: Professional Experience</Button>)}
+                    </Button>) : (<Button type="submit" className="bg-red-500 rounded-full hover:bg-red-600">Next: Skills</Button>)}
                 </div>
             </form>
+            {isOpen && (<Preview Open={isOpen} onClose={() => setisOpen(false)} />)}
         </div>
     )
 }

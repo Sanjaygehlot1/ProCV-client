@@ -21,8 +21,8 @@ function GetStarted() {
   <p className="text-gray-700 mt-2 text-lg">
     Create a professional resume in minutes with our easy-to-use builder.
   </p>
-  <Link to={"/login"}>
-  <Button   className="mt-6 px-8 py-3 text-lg" size="lg"
+  <Link to={"/templates"}>
+  <Button   className="mt-6 px-8 rounded-lg py-3 text-lg" size="lg"
   >
     Start Building
   </Button>

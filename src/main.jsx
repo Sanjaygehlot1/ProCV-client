@@ -9,8 +9,6 @@ import App from './App.jsx';
 import Templates from './Pages/Templates.jsx';
 import GetStarted from './Pages/GetStarted';
 import FinalPage from './Pages/FinalPage';
-import LoginPage from './Pages/LoginPage';
-import SignUpPage from './Pages/SignupPage';
 import ResumeBuilder from './Pages/ResumeBuilderPage.jsx';
 import PersonalDetails from './Components/React Components/PersonalDetails.jsx';
 import Education from './Components/React Components/Education.jsx';
@@ -19,6 +17,7 @@ import './index.css';
 import Experience from './Components/React Components/Experience';
 import Skills from './Components/React Components/Skills';
 import About from './Components/React Components/About';
+import AddProjects from './Components/React Components/Projects';
 
 const router = createBrowserRouter([
   {
@@ -26,10 +25,7 @@ const router = createBrowserRouter([
     path: '/',
     children: [
       { element: <GetStarted />, path: '/' },
-      { element: <LoginPage />, path: '/login' },
-      { element: <SignUpPage />, path: '/register' },
       { element: <Templates />, path: '/templates' },
-      { element: <FinalPage />, path: '/final/:resumeId' },
       { 
         element: <ResumeBuilder />, 
         path: '/create',
@@ -38,6 +34,7 @@ const router = createBrowserRouter([
           { element: <Education />, path: '/create/education' },
           { element: <Experience/>,  path: '/create/professional-experience' },
           { element: <Skills/>,  path: '/create/skills' },
+          { element: <AddProjects/>,  path: '/create/projects' },
           { element: <About/>,  path: '/create/summary' },
           { element: <FinalPage/>,  path: '/create/finalize' },
         ],

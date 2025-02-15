@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { SaveAboutDetails } from "@/Slices/ResumeSlice";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import Preview from "@/Utilities/preview";
+import { useNavigate } from "react-router-dom";
 
 function About() {
 
@@ -20,14 +22,15 @@ function About() {
     const error = useSelector((state) => state.Resume.error)
     const loadingState = useSelector((state) => state.Resume.loading)
     const dispatch = useDispatch()
-
+    const [isOpen, setisOpen] = useState(false)
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-
+    const navigate = useNavigate()
 
     const searchWithAI = async () => {
+       if(searchTerm){
         setloading(true)
         try {
-
+            
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const prompt = `give me 3 different descriptive summaries on ${searchTerm} for the summary section of my resume.  it should be of atleast 5 lines and give each in one paragraph, no line breaks within each summary start with text no title . `;
             const result = await model.generateContent(prompt);
@@ -41,6 +44,7 @@ function About() {
             console.error("Error fetching AI suggestions:", error);
         }
         setloading(false)
+       }
     }
 
     const submit = async () => {
@@ -51,6 +55,9 @@ function About() {
                     data : summary
                 })).unwrap()
                 toast.success("Summary saved successfully!")
+                navigate("/create/finalize",{
+
+                })
             }
 
         } catch (err) {
@@ -83,20 +90,20 @@ function About() {
                     />
                 </div>
                 <div className="mt-3 flex justify-between flex-wrap gap-2 text-blue-600">
-                    <div className="mt-3 flex flex-wrap gap-2 text-blue-600">
-                        {["Cashier", "Customer Service Representative", "Manager", "Server", "Retail"].map(
+                    <div className="mt-3 flex flex-wrap gap-2 text-white">
+                        {["Doctor", "Customer Service Representative", "Full Stack Developer", "Server", "Backend Developer"].map(
                             (job, index) => (
-                                <span onClick={(e) => setSearchTerm(e.target.innerText)} key={index} className="cursor-pointer hover:underline">{job}</span>
+                                <span  onClick={(e) => setSearchTerm(e.target.innerText)} key={index} className="cursor-pointer  bg-gray-600  rounded-full px-2 py-1 hover:bg-gray-700">{job}</span>
                             )
                         )}
                     </div>
                     {loading ? (
-                        <Button disabled >
+                        <Button className="rounded-full" disabled >
                             Searching...
                         </Button>
                     ) :
                         (
-                            <Button onClick={searchWithAI} >
+                            <Button className="rounded-full" onClick={searchWithAI} >
                                 Search
                             </Button>
                         )}
@@ -133,7 +140,7 @@ function About() {
                     <CardContent>
                         <Textarea
                             placeholder="Write your summary here..."
-                            value={summary}
+                            value={summary || resumeData.about}
                             onChange={(e) => setSummary(e.target.value)}
                             className="h-32"
                         />
@@ -142,12 +149,16 @@ function About() {
             </div>
 
             <div className="flex justify-between mt-6">
-                <Button variant="outline">Preview</Button>
-                {loadingState ? (<Button disabled className="bg-red-500 hover:bg-red-600">
+            <Button className ="rounded-full" variant="" onClick={(e) => {
+                                e.preventDefault()
+                                setisOpen(true)
+                            }}>Preview</Button>
+                {loadingState ? (<Button disabled className="bg-red-500 rounded-full hover:bg-red-600">
                     <Loader2 className="animate-spin" />
                     Saving
-                </Button>) : (<Button onClick= {submit} className="bg-red-500 hover:bg-red-600">Next: Finalize</Button>)}
+                </Button>) : (<Button onClick= {submit} className="bg-red-500 rounded-full hover:bg-red-600">Next: Finalize</Button>)}
             </div>
+            {isOpen && (<Preview Open={isOpen} onClose={() => setisOpen(false)} />)}
         </div>
     );
 }

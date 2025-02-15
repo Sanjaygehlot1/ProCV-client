@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,9 @@ import { Separator } from "@/components/ui/separator";
 import { useSelector, useDispatch } from "react-redux";
 import { SaveSkillsDetails } from "@/Slices/ResumeSlice";
 import toast from "react-hot-toast";
-
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Preview from "@/Utilities/preview";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 export default function SkillsSection() {
@@ -19,7 +21,9 @@ export default function SkillsSection() {
   const loadingState = useSelector((state) => state.Resume.loading)
   const error = useSelector((state) => state.Resume.error)
   const resumeData = useSelector((state) => state.Resume.resume)
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [isOpen, setisOpen] = useState(false)
   const addSkill = () => {
     if (inputSkill.trim() !== "") {
       setSkills([...skills, inputSkill.trim()]);
@@ -43,10 +47,15 @@ export default function SkillsSection() {
     setLoading(false);
   };
 
+  useEffect(()=>{
+      setSkills(resumeData.skills)
+  },[])
+
   const submit = async () => {
     try {
       await dispatch(SaveSkillsDetails({ resumeId: resumeData._id, data: skills })).unwrap()
       toast.success("Details saved successfully")
+      navigate("/create/projects")
 
     } catch (err) {
       console.log(err)
@@ -100,12 +109,16 @@ export default function SkillsSection() {
       </div>
 
       <div className="flex justify-between mt-6">
-        <Button variant="outline">Preview</Button>
-        {loadingState ? (<Button disabled className="bg-red-500 hover:bg-red-600">
+        <Button variant="" className="rounded-full" onClick={(e) => {
+                                e.preventDefault()
+                                setisOpen(true)
+                            }}>Preview</Button>
+        {loadingState ? (<Button disabled className="bg-red-500 rounded-full hover:bg-red-600">
           <Loader2 className="animate-spin" />
           Please wait
-        </Button>) : (<Button type="submit" className="bg-red-500 hover:bg-red-600">Next: Professional Experience</Button>)}
+        </Button>) : (<Button type="button" onClick={submit} className="bg-red-500 rounded-full hover:bg-red-600">Next: Projects</Button>)}
       </div>
+      {isOpen && (<Preview Open={isOpen} onClose={() => setisOpen(false)} />)}
     </div>
   );
 }

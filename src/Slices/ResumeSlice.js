@@ -7,6 +7,7 @@ const initialState = {
     error : null
 }
 
+
 const SelectResumeTemplate = createAsyncThunk("resume/templates",async (templateNumber,{rejectWithValue})=>{
     console.log(templateNumber)
     try {
@@ -77,6 +78,22 @@ const SaveSkillsDetails = createAsyncThunk("resume/skills",async (data,{rejectWi
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/skills/${data.resumeId}`,{Skills: data.data})
+
+         if(Response){
+            console.log(Response)
+            return Response.data.data
+         }
+        }
+    } catch (error) {
+        return  rejectWithValue(error.response.message)
+    }
+
+}) 
+const SaveProjectDetails = createAsyncThunk("resume/projects",async (data,{rejectWithValue})=>{
+    console.log(data)
+    try {
+        if(data){
+         const Response = await AxiosInstance.post(`/resume/projects/${data.resumeId}`,{Projects: data.data})
 
          if(Response){
             console.log(Response)
@@ -203,6 +220,19 @@ const ResumeSlice = createSlice({
             state.loading = false,
             state.error = action.payload
         })
+        reducer.addCase(SaveProjectDetails.pending,(state)=>{
+            state.loading = true
+            state.error = null
+        })
+        reducer.addCase(SaveProjectDetails.fulfilled,(state,action)=>{
+            state.loading = false,
+            state.resume = action.payload,
+            state.error = null
+        })
+        reducer.addCase(SaveProjectDetails.rejected,(state,action)=>{
+            state.loading = false,
+            state.error = action.payload
+        })
         reducer.addCase(SaveAboutDetails.pending,(state)=>{
             state.loading = true
             state.error = null
@@ -226,6 +256,7 @@ export {
     SaveEducationInfo,
     SaveExperienceDetails,
     SaveSkillsDetails,
+    SaveProjectDetails,
     SaveAboutDetails
 }
 

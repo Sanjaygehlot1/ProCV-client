@@ -1,96 +1,106 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import React, { useState } from "react";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { SelectResumeTemplate } from "@/Slices/ResumeSlice";
 import toast from "react-hot-toast";
+
+
+
 const resumeTemplates = [
   {
     title: "Contemporary",
-    description: "This template highlights experience, education, and skills for management or business roles needing a polished format.",
-    image: "/images/resume1.png",
-    code: "101"
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/dugkptcrlaweo0n1urda",
+    
+    code: "101",
   },
   {
     title: "Current",
-    description: "Bold headings and clean lines make this template perfect for fast-paced industries like tech or product management.",
-    image: "/images/resume2.png",
-    code: "102"
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/ctb4amkoauqibexb2dka",
+    code: "102",
   },
   {
     title: "Innovative",
-    description: "With a unique design, this template is ideal for artists or creatives wanting a visually engaging resume.",
-    image: "/images/resume3.png",
-    code: "103"
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/asa1zghma67j3dd1tanv",
+    code: "103",
   },
   {
     title: "Basic",
-    description: "This template showcases leadership, certifications, and skills, fitting senior professionals highlighting career achievements.",
-    image: "/images/resume4.png",
-    code: "104"
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/wrkmaio2ty1rhknxokwi",
+    code: "104",
   },
   {
     title: "Polished",
-    description: "A straightforward design for entry-level roles in fast-paced industries where clarity and simplicity are key.",
-    image: "/images/resume5.png",
-    code: "105"
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/xksus56hwkuxbtvbzd8g",
+    code: "105",
+  },
+  {
+    title: "Polished",
+    image: " https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/qhzrfdadelagrerlzipx",
+    code: "106",
+  },
+  {
+    title: "Polished",
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/qvfqfxgttsyiw9qw7a6p",
+    code: "107",
+  },
+  {
+    title: "Polished",
+    
+    image:  "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/qbuofez5medashgpvdsa",
+    code: "108",
+  },
+  {
+    title: "Polished",
+    image:"https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/s3k6okl2tolpwmst69cp",
+    code: "109",
+  },
+  {
+    title: "Polished",
+    image: "https://res.cloudinary.com/sanjay100/image/upload/f_auto,q_auto/v1/Resume%20Templates/ub1ul5pkgwsbts0yjolz",
+    code: "110",
   },
 ];
 
 const ResumeTemplatesGrid = () => {
+  const { handleSubmit, setError, formState: { errors } } = useForm();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [SelectedTemplateNumber, setSelectedTemplateNumber] = useState(null)
 
-  const { register, handleSubmit, formState: { errors }, setError } = useForm()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   const submitTemplate = async (data) => {
-    try {
-      if (data) {
-        console.log(data)
-        if (!data.templateNumber) {
-          setError("templateNumber", {
-            message: "Please select atleast one template to continue."
-          })
-          return
-        }
-        await dispatch(SelectResumeTemplate(data.templateNumber)).unwrap()
-        toast.success("template selected.")
-        navigate("/create/personal-details")
-      }
-    } catch (err) {
-      console.log(err)
+    console.log(SelectedTemplateNumber)
+    if (!SelectedTemplateNumber) {
+      console.log("not")
+      setError("templateNumber", { message: "Please select at least one template to continue." });
+      return;
     }
-  }
+    await dispatch(SelectResumeTemplate(SelectedTemplateNumber)).unwrap();
+    toast.success("Template selected.");
+    navigate("/create/personal-details");
+  };
 
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-3xl font-bold text-center mb-6">Choose Your Resume Template</h2>
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
-        <Button variant="outline">All</Button>
-        <Button variant="outline">Creative</Button>
-        <Button variant="outline">Simple</Button>
-        <Button variant="outline">Modern</Button>
-        <Button variant="outline">ATS Friendly</Button>
-      </div>
-      <form onSubmit={handleSubmit(submitTemplate)}>
-        {errors.templateNumber && <div className="text-red-600">{errors.templateNumber.message
-        }</div>}
+      {errors.templateNumber && <div className="text-red-600 text-center">{errors.templateNumber.message}</div>}
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        submitTemplate({ templateNumber: SelectedTemplateNumber });
+      }}>
         <div className="grid grid-cols-1 min-2xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {resumeTemplates.map((template, index) => (
-            <Card key={index}
-              className="shadow-lg rounded-lg overflow-hidden flex flex-col"
-              {...register("templateNumber", {
-                value: template.code,
-                required: "Please select atleast one template to continue."
-              })}
-            >
-              <img src={template.image} alt={template.title} className="w-full h-40 object-cover" />
-              <CardContent className="p-4 flex flex-col flex-grow">
-                <h3 className="text-lg font-semibold">{template.title}</h3>
-                <p className="text-sm text-gray-600 mt-2 flex-grow">{template.description}</p>
-                <Button type="submit" className="mt-4 w-full">Use This Template</Button>
-              </CardContent>
+            <Card key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
+              <img src={template.image} alt={template.title} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
+                <Button type="button" className="bg-white text-black font-semibold" onClick={() => {
+                  setSelectedTemplateNumber(template.code)
+                  submitTemplate()}}>
+                  Use This Template
+                </Button>
+              </div>
             </Card>
           ))}
         </div>

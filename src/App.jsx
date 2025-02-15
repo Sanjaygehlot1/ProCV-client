@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 function App() {
 
   return (
+    
     <div className = "w-full min-h-screen">
       <Toaster position="bottom-right" reverseOrder={false} />
       <main>

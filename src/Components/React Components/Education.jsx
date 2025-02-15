@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect ,useState} from 'react'
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { SaveEducationInfo } from '@/Slices/ResumeSlice';
 import toast from 'react-hot-toast';
+import Preview from '@/Utilities/Preview';
 import { Loader2 } from 'lucide-react';
 function Education() {
 
@@ -16,9 +17,8 @@ function Education() {
     const resumeDetails = useSelector((state) => state.Resume.resume)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    const [isOpen ,setisOpen ] = useState()
     const { register, handleSubmit, formState: { errors }, setValue, setError } = useForm()
-    console.log(resumeDetails)
     const submit = async (data) => {
         try {
             console.log(data)
@@ -52,6 +52,7 @@ function Education() {
 
 
     return (
+        <div>
         <form onSubmit={handleSubmit(submit)}>
             <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold">Tell us about your education</h2>
@@ -135,14 +136,19 @@ function Education() {
                 </Card>
 
                 <div className="flex justify-between mt-6">
-                    <Button variant="outline">Preview</Button>
-                    {loadingState ? (<Button disabled className="bg-red-500 hover:bg-red-600">
+                    <Button variant="outline" className="rounded-full" onClick={(e)=>{
+                        e.preventDefault()
+                        setisOpen(true)
+                    }}>Preview</Button>
+                    {loadingState ? (<Button disabled className="bg-red-500 rounded-full hover:bg-red-600">
                         <Loader2 className="animate-spin" />
                         Please wait
-                    </Button>) : (<Button type="submit" className="bg-red-500 hover:bg-red-600">Next: Professional Experience</Button>)}
+                    </Button>) : (<Button type="submit" className="bg-red-500 rounded-full hover:bg-red-600">Next: Professional Experience</Button>)}
                 </div>
             </div>
         </form>
+        {isOpen && (<Preview Open={isOpen} onClose={()=>setisOpen(false)}/>)}
+        </div>
     )
 }
 
