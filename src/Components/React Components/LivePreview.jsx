@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GetResumeById } from '@/Slices/ResumeSlice'
 import { Loader2 } from "lucide-react"
 import { Button } from '@/Components/ui/button'
-import html2canvas from 'html2canvas'
-import { DownloadIcon } from 'lucide-react'
-import { jsPDF } from 'jspdf'
+
 
 function LivePreview() {
   const dispatch = useDispatch()

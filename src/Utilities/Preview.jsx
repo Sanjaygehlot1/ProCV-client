@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '@/Components/ui/button';
 import { motion, AnimatePresence } from "framer-motion"; 
 import { X } from 'lucide-react';
+
 function Preview({ Open, onClose }) {     
     const resumeData = useSelector((state) => state.Resume.resume);
     const [isVisible, setIsVisible] = useState(Open);
@@ -45,7 +46,7 @@ function Preview({ Open, onClose }) {
                     transition={{ duration: 0.3 }}
                 >
                     <motion.div 
-                        className="bg-white p-6 rounded-lg shadow-xl max-w-4xl w-full relative"
+                        className="bg-white p-4 sm:p-6 rounded-lg shadow-xl w-full max-w-[90%] md:max-w-4xl relative mx-4"
                         initial={{ opacity: 0, y: 50, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -55,7 +56,7 @@ function Preview({ Open, onClose }) {
                             className="absolute top-4 right-4 hover:bg-red-600 bg-red-500 text-white px-3 py-2 rounded-full"
                             onClick={onClose}
                         >
-                                <X size={"20px"}/>
+                            <X size={"20px"}/>
                         </Button>
 
                         <h2 className="text-2xl font-bold mb-4 text-center">Resume Preview</h2>

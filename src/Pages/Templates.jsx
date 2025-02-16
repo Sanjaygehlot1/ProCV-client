@@ -3,10 +3,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { SelectResumeTemplate } from "@/Slices/ResumeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { ChangeResumeTemplate, SelectResumeTemplate } from "@/Slices/ResumeSlice";
 import toast from "react-hot-toast";
-
+import { Bell } from "lucide-react";
 
 
 const resumeTemplates = [
@@ -65,27 +65,45 @@ const resumeTemplates = [
 ];
 
 const ResumeTemplatesGrid = () => {
-  const { handleSubmit, setError, formState: { errors } } = useForm();
+  const { setError, formState: { errors } } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [SelectedTemplateNumber, setSelectedTemplateNumber] = useState(null)
+  const resumeData = useSelector((state)=>state.Resume.resume)
+  const loading = useSelector((state)=>state.Resume.loading)
 
-  const submitTemplate = async (data) => {
-    console.log(SelectedTemplateNumber)
+  const submitTemplate = async () => {
     if (!SelectedTemplateNumber) {
-      console.log("not")
-      setError("templateNumber", { message: "Please select at least one template to continue." });
+      setError("templateNumber", { message: "Click again to select template !!" });
       return;
     }
-    await dispatch(SelectResumeTemplate(SelectedTemplateNumber)).unwrap();
-    toast.success("Template selected.");
-    navigate("/create/personal-details");
+
+    toast.promise(
+      (async () => {
+        if (Object.keys(resumeData).length === 0) {
+          await dispatch(SelectResumeTemplate(SelectedTemplateNumber)).unwrap();
+          navigate("/create/personal-details");
+        } else {
+          await dispatch(ChangeResumeTemplate({ resumeId: resumeData._id, templateNumber : SelectedTemplateNumber })).unwrap();
+          navigate("/create/finalize");
+        }
+      })(),
+      {
+        loading: "Applying Template...",
+        success: "Template Applied Successfully!",
+        error: "Failed to Apply Template. Please Try Again.",
+      }
+    );
+
   };
 
+  
+  
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-3xl font-bold text-center mb-6">Choose Your Resume Template</h2>
-      {errors.templateNumber && <div className="text-red-600 text-center">{errors.templateNumber.message}</div>}
+      {errors.templateNumber && <div className="w-full flex justify-center">
+        <div className="text-white bg-gray-800 flex gap-1 px-3 py-1 mb-3 rounded-xl mx-auto text-center">{<Bell/>}{errors.templateNumber.message}</div></div>}
       <form onSubmit={(e) => {
         e.preventDefault();
         submitTemplate({ templateNumber: SelectedTemplateNumber });

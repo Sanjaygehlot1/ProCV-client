@@ -9,13 +9,11 @@ const initialState = {
 
 
 const SelectResumeTemplate = createAsyncThunk("resume/templates",async (templateNumber,{rejectWithValue})=>{
-    console.log(templateNumber)
     try {
         if(templateNumber){
          const Response = await AxiosInstance.post(`/resume/select-template`,{templateNumber})
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -26,13 +24,11 @@ const SelectResumeTemplate = createAsyncThunk("resume/templates",async (template
 }) 
 
 const SavePersonalDetails = createAsyncThunk("resume/personal-details",async (data,{rejectWithValue})=>{
-    console.log(data)
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/personal-info/${data.resumeId}`,data.data)
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -42,13 +38,11 @@ const SavePersonalDetails = createAsyncThunk("resume/personal-details",async (da
 
 }) 
 const SaveEducationInfo = createAsyncThunk("resume/edu-details",async (data,{rejectWithValue})=>{
-    console.log(data)
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/edu-details/${data.resumeId}`,data.data)
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -58,13 +52,11 @@ const SaveEducationInfo = createAsyncThunk("resume/edu-details",async (data,{rej
 
 }) 
 const SaveExperienceDetails = createAsyncThunk("resume/expr-details",async (data,{rejectWithValue})=>{
-    console.log(data)
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/expr/${data.resumeId}`,data.data)
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -74,13 +66,11 @@ const SaveExperienceDetails = createAsyncThunk("resume/expr-details",async (data
 
 }) 
 const SaveSkillsDetails = createAsyncThunk("resume/skills",async (data,{rejectWithValue})=>{
-    console.log(data)
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/skills/${data.resumeId}`,{Skills: data.data})
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -90,13 +80,11 @@ const SaveSkillsDetails = createAsyncThunk("resume/skills",async (data,{rejectWi
 
 }) 
 const SaveProjectDetails = createAsyncThunk("resume/projects",async (data,{rejectWithValue})=>{
-    console.log(data)
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/projects/${data.resumeId}`,{Projects: data.data})
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -106,13 +94,11 @@ const SaveProjectDetails = createAsyncThunk("resume/projects",async (data,{rejec
 
 }) 
 const SaveAboutDetails = createAsyncThunk("resume/summary",async (data,{rejectWithValue})=>{
-    console.log(data)
     try {
         if(data){
          const Response = await AxiosInstance.post(`/resume/background/${data.resumeId}`,{background : data.data})
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -121,14 +107,28 @@ const SaveAboutDetails = createAsyncThunk("resume/summary",async (data,{rejectWi
     }
 
 }) 
+const ChangeResumeTemplate = createAsyncThunk("resume/change-temp",async (data,{rejectWithValue})=>{
+    try {
+        if(data){
+         const Response = await AxiosInstance.post(`/resume/change-temp/${data.resumeId}`,{templateNumber : data.templateNumber})
+
+         if(Response){
+            return Response.data.data
+         }
+        }
+    } catch (error) {
+        return  rejectWithValue(error.response.message)
+    }
+
+}) 
+
+
 const GetResumeById = createAsyncThunk("resume/get",async (resumeId,{rejectWithValue})=>{
-    console.log(resumeId)
     try {
         if(resumeId){
          const Response = await AxiosInstance.get(`/resume/get-resume/${resumeId}`)
 
          if(Response){
-            console.log(Response)
             return Response.data.data
          }
         }
@@ -246,6 +246,19 @@ const ResumeSlice = createSlice({
             state.loading = false,
             state.error = action.payload
         })
+        reducer.addCase(ChangeResumeTemplate.pending,(state)=>{
+            state.loading = true
+            state.error = null
+        })
+        reducer.addCase(ChangeResumeTemplate.fulfilled,(state,action)=>{
+            state.loading = false,
+            state.resume = action.payload,
+            state.error = null
+        })
+        reducer.addCase(ChangeResumeTemplate.rejected,(state,action)=>{
+            state.loading = false,
+            state.error = action.payload
+        })
     }
 })
 
@@ -254,6 +267,7 @@ export {
     GetResumeById,
     SavePersonalDetails,
     SaveEducationInfo,
+    ChangeResumeTemplate,
     SaveExperienceDetails,
     SaveSkillsDetails,
     SaveProjectDetails,

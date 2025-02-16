@@ -1,19 +1,17 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; 
+import storageSession from "redux-persist/lib/storage/session"; 
 import resumeReducer from "../Slices/ResumeSlice.js";
-import Authreducer from "../Slices/AuthSlice.js"
 import {thunk} from "redux-thunk"; 
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage : storageSession,
   whitelist: ["Resume"], 
 };
 
 const rootReducer = combineReducers({
   Resume: resumeReducer,
-  Auth : Authreducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
