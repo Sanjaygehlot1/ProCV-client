@@ -119,7 +119,7 @@ function About() {
                 </Button>
               ) : (
                 <Button className="rounded-full" onClick={searchWithAI}>
-                  Search
+                 {<Search/>} Search
                 </Button>
               )}
             </div>

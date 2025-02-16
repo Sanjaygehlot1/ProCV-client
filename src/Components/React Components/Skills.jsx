@@ -106,7 +106,7 @@ export default function SkillsSection() {
             <CardTitle className="text-lg font-semibold">Add Your Skills</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Input
                 placeholder="Type a skill..."
                 value={inputSkill}

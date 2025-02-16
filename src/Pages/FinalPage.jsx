@@ -61,31 +61,27 @@ function FinalPage() {
 
   const generatePDF = () => {
     if (!pdfRef.current) return;
-    toast.promise(async()=>{
-      html2canvas(pdfRef.current, { scale: 5 }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const imgProps = pdf.getImageProperties(imgData);
-        const imgWidth = pdfWidth;
-        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        pdf.save('resume.pdf');
-      });
-    },
+   toast.promise(async()=>{
+    html2canvas(pdfRef.current, { scale: 5 }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgWidth = pdfWidth;
+      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('resume.pdf');
+    });
+   },
   {
     loading: "Preparing to download...",
-    success: "Resume downloaded!"
+    success:'Resume downloaded!'
   })
   };
 
   return (
     <div className="flex flex-col md:flex-row w-full">
-      <div
-        className="w-full md:w-4/5 p-4 overflow-auto"
-        style={{ maxHeight: 'calc(100vh - 100px)' }}
-        ref={pdfRef}
-      >
+      <div className="w-full md:w-4/5 min-h-screen p-4" ref={pdfRef}>
         {Templates.map((item, index) => {
           if (item.code === resumeData.template) {
             return <div key={index}>{item.template}</div>;
