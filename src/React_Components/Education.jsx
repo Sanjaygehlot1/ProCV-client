@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from "@/components/ui/input";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Input } from "@/TempFolder/ui/input";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/TempFolder/ui/select";
+import { Button } from "@/TempFolder/ui/button";
+import { Card } from "@/TempFolder/ui/card";
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

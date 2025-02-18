@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/TempFolder/ui/input.jsx";
+import { Button } from "@/TempFolder/ui/button.jsx";
+import { Card, CardContent, CardHeader } from "@/TempFolder/ui/card.jsx";
 import { Plus, Trash } from "lucide-react";
 import { SaveProjectDetails } from "../Slices/ResumeSlice.js";
 import { useDispatch, useSelector } from "react-redux";

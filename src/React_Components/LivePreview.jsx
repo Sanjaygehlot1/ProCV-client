@@ -3,7 +3,7 @@ import { TemplateOne, TemplateTwo, TemplateThree,TemplateFour,TemplateFive,Templ
 import { useDispatch, useSelector } from 'react-redux'
 import { GetResumeById } from '../Slices/ResumeSlice'
 import { Loader2 } from "lucide-react"
-import { Button } from '../components/ui/button'
+import { Button } from '../TempFolder/ui/button'
 
 
 function LivePreview() {
