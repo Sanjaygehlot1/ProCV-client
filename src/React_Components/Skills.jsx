@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Separator } from "../components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { useSelector, useDispatch } from "react-redux";
-import { SaveSkillsDetails } from "@/Slices/ResumeSlice";
+import { SaveSkillsDetails } from "../Slices/ResumeSlice.js";
 import toast from "react-hot-toast";
 import { Loader2, CopyPlusIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Preview from "@/Utilities/preview";
+import Preview from "../Utilities/Preview";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 

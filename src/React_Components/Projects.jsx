@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardHeader } from "../components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Plus, Trash } from "lucide-react";
-import { SaveProjectDetails } from "@/Slices/ResumeSlice";
+import { SaveProjectDetails } from "../Slices/ResumeSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";

@@ -9,7 +9,7 @@ import Templates from './Pages/Templates.jsx';
 import GetStarted from './Pages/GetStarted';
 import FinalPage from './Pages/FinalPage';
 import ResumeBuilder from './Pages/ResumeBuilderPage.jsx';
-import PersonalDetails from './React_Components/PersonalDetails.jsx';
+import PersonalDetails from './React_Components/PersonalDetails';
 import Education from './React_Components/Education.jsx';
 
 import './index.css';
