@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { 
     TemplateOne, TemplateTwo, TemplateThree, TemplateFour, TemplateFive, 
     TemplateSix, TemplateSeven, TemplateEight, TemplateNine, TemplateTen 
-} from '@/Components/ResumeTemplates/Templates';
+} from '@/components/ResumeTemplates/Templates';
 import { useSelector } from 'react-redux';
-import { Button } from '../Components/ui/button';
+import { Button } from '../components/ui/button';
 import { motion, AnimatePresence } from "framer-motion"; 
 import { X } from 'lucide-react';
 

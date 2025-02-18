@@ -9,14 +9,14 @@ import Templates from './Pages/Templates.jsx';
 import GetStarted from './Pages/GetStarted';
 import FinalPage from './Pages/FinalPage';
 import ResumeBuilder from './Pages/ResumeBuilderPage.jsx';
-import PersonalDetails from './Components/React Components/PersonalDetails.jsx';
-import Education from './Components/React Components/Education.jsx';
+import PersonalDetails from './components/React Components/PersonalDetails.jsx';
+import Education from './components/React Components/Education.jsx';
 
 import './index.css';
-import Experience from './Components/React Components/Experience';
-import Skills from './Components/React Components/Skills';
-import About from './Components/React Components/About';
-import AddProjects from './Components/React Components/Projects';
+import Experience from './components/React Components/Experience';
+import Skills from './components/React Components/Skills';
+import About from './components/React Components/About';
+import AddProjects from './components/React Components/Projects';
 
 const router = createBrowserRouter([
   {
