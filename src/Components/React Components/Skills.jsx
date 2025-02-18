@@ -48,7 +48,7 @@ export default function SkillsSection() {
       setAiSkills(suggestedSkills);
     } catch (error) {
       console.error("Error fetching AI skills:", error);
-      toast.error("Failed to fetch AI suggestions.");
+      toast.error("Something went wrong! please try again");
     }
     setLoading(false);
   };

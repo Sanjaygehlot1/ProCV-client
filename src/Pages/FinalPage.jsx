@@ -18,6 +18,7 @@ import { Button } from '@/Components/ui/button';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { useNavigate } from 'react-router-dom';
+import { FileEditIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 function FinalPage() {
@@ -99,7 +100,7 @@ function FinalPage() {
           Download PDF
         </Button>
         <Button onClick={() => navigate('/templates')} className="w-full">
-          Change Template
+          {<FileEditIcon/>}Change Template
         </Button>
       </div>
     </div>

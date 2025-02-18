@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangeResumeTemplate, SelectResumeTemplate } from "@/Slices/ResumeSlice";
 import toast from "react-hot-toast";
@@ -70,7 +71,6 @@ const ResumeTemplatesGrid = () => {
   const navigate = useNavigate();
   const [SelectedTemplateNumber, setSelectedTemplateNumber] = useState(null)
   const resumeData = useSelector((state)=>state.Resume.resume)
-  const loading = useSelector((state)=>state.Resume.loading)
 
   const submitTemplate = async () => {
     if (!SelectedTemplateNumber) {
@@ -80,12 +80,12 @@ const ResumeTemplatesGrid = () => {
 
     toast.promise(
       (async () => {
-        if (Object.keys(resumeData).length === 0) {
-          await dispatch(SelectResumeTemplate(SelectedTemplateNumber)).unwrap();
-          navigate("/create/personal-details");
-        } else {
+        if (resumeData?.template) {
           await dispatch(ChangeResumeTemplate({ resumeId: resumeData._id, templateNumber : SelectedTemplateNumber })).unwrap();
           navigate("/create/finalize");
+        } else {
+          await dispatch(SelectResumeTemplate(SelectedTemplateNumber)).unwrap();
+          navigate("/create/personal-details");
         }
       })(),
       {
@@ -108,23 +108,45 @@ const ResumeTemplatesGrid = () => {
         e.preventDefault();
         submitTemplate({ templateNumber: SelectedTemplateNumber });
       }}>
-        <div className="grid grid-cols-1 min-2xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {resumeTemplates.map((template, index) => (
-            <Card key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
-              <img src={template.image} alt={template.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
-                <Button type="button" className="bg-white text-black font-semibold" onClick={() => {
-                  setSelectedTemplateNumber(template.code)
-                  submitTemplate()}}>
-                  Use This Template
-                </Button>
-              </div>
-            </Card>
-          ))}
-        </div>
+        <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="grid grid-cols-1 min-2xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+    >
+      {resumeTemplates.map((template, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.5,
+            delay: index * 0.2, 
+          }}
+          className="relative group overflow-hidden rounded-lg shadow-lg"
+        >
+          <Card className="relative overflow-hidden rounded-lg shadow-lg">
+            <img src={template.image} alt={template.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50">
+              <Button
+                type="button"
+                className="bg-white text-black font-semibold"
+                onClick={() => {
+                  setSelectedTemplateNumber(template.code);
+                  submitTemplate();
+                }}
+              >
+                Use This Template
+              </Button>
+            </div>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
       </form>
     </div>
   );
+ 
 };
 
 export default ResumeTemplatesGrid;
