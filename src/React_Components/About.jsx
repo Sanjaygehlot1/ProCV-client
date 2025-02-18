@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Input } from "@/TempFolder/ui/input";
-import { Button } from "@/TempFolder/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/TempFolder/ui/card";
-import { Textarea } from "@/TempFolder/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import { Search, CopyPlusIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { SaveAboutDetails } from "../Slices/ResumeSlice";

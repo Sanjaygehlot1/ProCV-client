@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
-import { Input } from "@/TempFolder/ui/input";
-import { Button } from "@/TempFolder/ui/button";
-import { Label } from "@/TempFolder/ui/label";
-import { Card, CardContent } from "@/TempFolder/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
 import { useDispatch, useSelector } from 'react-redux';
 import { SavePersonalDetails } from '@/Slices/ResumeSlice';
 import { useNavigate } from 'react-router-dom';

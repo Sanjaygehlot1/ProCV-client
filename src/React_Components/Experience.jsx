@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from "@/TempFolder/ui/input";
-import { Button } from "@/TempFolder/ui/button";
-import { Checkbox } from "@/TempFolder/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/TempFolder/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { SaveExperienceDetails } from '../Slices/ResumeSlice';

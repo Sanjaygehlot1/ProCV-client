@@ -14,7 +14,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { GetResumeById } from '../Slices/ResumeSlice.js';
 import { Loader2, DownloadIcon } from 'lucide-react';
-import { Button } from '@/TempFolder/ui/button';
+import { Button } from '@/components/ui/button';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { useNavigate } from 'react-router-dom';

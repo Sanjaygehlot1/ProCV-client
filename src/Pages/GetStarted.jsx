@@ -1,5 +1,5 @@
-import { Button } from "@/TempFolder/ui/button";
-import { Card, CardContent } from "@/TempFolder/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { CheckCircle, FileText, Wand } from "lucide-react";
 import { useNavigate } from "react-router-dom";
