@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader } from "../ui/card";
 import { Plus, Trash } from "lucide-react";
 import { SaveProjectDetails } from "@/Slices/ResumeSlice";
 import { useDispatch, useSelector } from "react-redux";

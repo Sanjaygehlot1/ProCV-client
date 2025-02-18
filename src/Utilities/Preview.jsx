@@ -4,7 +4,7 @@ import {
     TemplateSix, TemplateSeven, TemplateEight, TemplateNine, TemplateTen 
 } from '@/Components/ResumeTemplates/Templates';
 import { useSelector } from 'react-redux';
-import { Button } from '@/Components/ui/button';
+import { Button } from '../Components/ui/button';
 import { motion, AnimatePresence } from "framer-motion"; 
 import { X } from 'lucide-react';
 
