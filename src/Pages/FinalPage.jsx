@@ -10,7 +10,7 @@ import {
   TemplateEight,
   TemplateNine,
   TemplateTen,
-} from '@/components/ResumeTemplates/Templates';
+} from '@/React_Components/ResumeTemplates/Templates';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetResumeById } from '@/Slices/ResumeSlice';
 import { Loader2, DownloadIcon } from 'lucide-react';

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Checkbox } from "../components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { SaveExperienceDetails } from '../../Slices/ResumeSlice';
+import { SaveExperienceDetails } from '../Slices/ResumeSlice';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
-import Preview from '../../Utilities/Preview';
+import Preview from '../Utilities/Preview';
 
 function Experience() {
   const loadingState = useSelector((state) => state.Resume.loading);

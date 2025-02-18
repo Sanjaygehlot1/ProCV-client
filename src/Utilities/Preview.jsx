@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { 
     TemplateOne, TemplateTwo, TemplateThree, TemplateFour, TemplateFive, 
     TemplateSix, TemplateSeven, TemplateEight, TemplateNine, TemplateTen 
-} from '@/components/ResumeTemplates/Templates';
+} from '@/React_Components/ResumeTemplates/Templates';
 import { useSelector } from 'react-redux';
 import { Button } from '../components/ui/button';
 import { motion, AnimatePresence } from "framer-motion"; 

@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Textarea } from "../ui/textarea";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Textarea } from "../components/ui/textarea";
 import { Search, CopyPlusIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { SaveAboutDetails } from "../../Slices/ResumeSlice";
+import { SaveAboutDetails } from "../Slices/ResumeSlice";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
-import Preview from "../../Utilities/Preview";
+import Preview from "../Utilities/Preview";
 import { useNavigate } from "react-router-dom";
 
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Separator } from "../ui/separator";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Separator } from "../components/ui/separator";
 import { useSelector, useDispatch } from "react-redux";
 import { SaveSkillsDetails } from "@/Slices/ResumeSlice";
 import toast from "react-hot-toast";

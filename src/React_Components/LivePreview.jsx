@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react'
-import { TemplateOne, TemplateTwo, TemplateThree,TemplateFour,TemplateFive,TemplateSix,TemplateSeven,TemplateEight,TemplateNine,TemplateTen } from '@/components/ResumeTemplates/Templates'
+import { TemplateOne, TemplateTwo, TemplateThree,TemplateFour,TemplateFive,TemplateSix,TemplateSeven,TemplateEight,TemplateNine,TemplateTen } from '@/React_Components/ResumeTemplates/Templates'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetResumeById } from '../../Slices/ResumeSlice'
+import { GetResumeById } from '../Slices/ResumeSlice'
 import { Loader2 } from "lucide-react"
-import { Button } from '../ui/button'
+import { Button } from '../components/ui/button'
 
 
 function LivePreview() {
