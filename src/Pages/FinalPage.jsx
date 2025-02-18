@@ -10,9 +10,9 @@ import {
   TemplateEight,
   TemplateNine,
   TemplateTen,
-} from '@/React_Components/ResumeTemplates/Templates';
+} from '../React_Components/ResumeTemplates/Templates';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetResumeById } from '@/Slices/ResumeSlice';
+import { GetResumeById } from '../Slices/ResumeSlice.js';
 import { Loader2, DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import html2canvas from 'html2canvas';
