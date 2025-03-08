@@ -30,7 +30,7 @@ function About() {
     if (searchTerm) {
       setLoading(true);
       try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
         const prompt = `give me 3 different descriptive summaries on ${searchTerm} for the summary section of my resume. It should be at least 5 lines long, with each summary in its own paragraph. Do not include a title.`;
         const result = await model.generateContent(prompt);
         const response = await result.response;
