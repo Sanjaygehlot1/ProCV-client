@@ -39,7 +39,7 @@ export default function SkillsSection() {
   const askAI = async () => {
     setLoading(true);
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
       const prompt = `List 5 professional and technical skills relevant to ${resumeData.previousJob.title}. Include 2 communication skills. Keep responses concise and response should be plain text no highlighting and text formating, no bold text only plain. dont add numbering or - before a skill`;
       const result = await model.generateContent(prompt);
       const response = await result.response;
